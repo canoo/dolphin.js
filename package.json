@@ -1,0 +1,21 @@
+{
+    "name"           : "dolphin",
+    "bundle"         : "dolphin",
+    "version"        : "0.0.1",
+    "devDependencies": {
+        "grunt"                   : ">=0.4.0",
+        "grunt-contrib"           : ">=0.4.0",
+        "grunt-contrib-requirejs" : ">=0.2.0",
+        "grunt-contrib-jshint"    : ">=0.1.0",
+        "grunt-contrib-clean"     : "~0.4.0",
+        "buster"                  : ">=0.6.12",
+        "buster-amd"              : ">=0.2.0",
+        "grunt-buster"            : "~0.1.2",
+        "lodash"                  : ">=1.0.1"
+    },
+    "engines"        : {
+        "node": "0.8.x",
+        "npm" : "1.1.x"
+    }
+}
+

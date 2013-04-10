@@ -1,0 +1,26 @@
+{
+    "name"        : "dolphin",
+    "version"     : "1.0.0",
+
+    "ignore": [
+        "examples/",
+        "test/",
+        "docs/",
+        "tests/",
+        "**/*.txt",
+        "**/*.png",
+        "**/*.jpg",
+        "**/*.pdf",
+        "**/*.html",
+        "**/Rakefile",
+        "**/LICENSE",
+        "**/.travis.yml",
+        "**/.gitignore",
+        "**/.npmignore",
+        "**/*.md"
+    ],
+
+    "dependencies": {
+        "requirejs"             : "~2.1.4"
+    }
+}
