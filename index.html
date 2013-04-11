@@ -7,13 +7,38 @@ dolphin.js
 <script src="libs/require.js"></script>
 <script src="config.js"></script>
 <script>
-    require(['Dolphin'], function (Dolphin) {
-        var serverUrl = "http://localhost:8080/myFirstDolphin/tutorial/";
+    require([
+        'Dolphin',
+        'comm/CreatePresentationModelCommand'
+    ], function (
+            Dolphin,
+            CreatePresentationModelCommand) {
+
+        var serverUrl = "http://localhost:8888/myFirstDolphin/tutorial/";
         var dolphin = new Dolphin(serverUrl);
 
         console.log('init done', dolphin);
 
-//        dolphin.getClientDolphin().send("step_7.TutorialConstants.LogOnServer")
+//        var connector = dolphin.getClientDolphin().getClientConnector();
+//
+//        var presModel = {
+//            id: "step_7.TutorialConstants.modelId",
+//            presentationModelType: undefined,
+//            attributes: [
+//                {
+//                    propertyName: "attrId",
+//                    id: 123456,
+//                    qualifier: undefined,
+//                    value: "myValue",
+//                    tag: "VALUE"
+//                }
+//            ]
+//        };
+//
+//        var command = new CreatePresentationModelCommand(presModel);
+//        connector.send(command);
+//        dolphin.getClientDolphin().send("step_7.TutorialConstants.LogOnServer");
+
     });
 </script>
 </body>

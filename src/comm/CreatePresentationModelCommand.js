@@ -4,12 +4,12 @@ define([
 
     var CreatePresentationModelCommand = function(model) {
 
-        this.id = "dolphin-core-createpresentationmodelcommand";
+        this.id = "CreatePresentationModel";
         this.className = "org.opendolphin.core.comm.CreatePresentationModelCommand";
 
         this.pmId = model.id;
         this.pmType = model.presentationModelType;
-        this.clientSideOnly = false;
+//        this.clientSideOnly = false;
 
         var attributes = [];
 
