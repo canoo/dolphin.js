@@ -12,6 +12,10 @@ define([
         var connector = new HttpClientConnector(this.clientDolphin, serverUrl);
         this.clientDolphin.setClientConnector(connector);
 
+        this.getClientDolphin = function() {
+            return this.clientDolphin;
+        };
+
         console.log("dolphin started", serverUrl);
 
     };

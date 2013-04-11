@@ -4,6 +4,10 @@ define(function () {
 
         this.clientDolphin = clientDolphin;
 
+        this.getClientDolphin = function() {
+            return this.clientDolphin;
+        }
+
     };
 
 });
