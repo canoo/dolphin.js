@@ -7,13 +7,7 @@ define([
 
     buster.testCase("HttpClientConnector", {
 
-        "setUp": function() {
-        },
-
-        "tearDown": function() {
-        },
-
-        "sends commands correctly": function(done) {
+        "sends commands and calls onFinished correctly": function(done) {
             var me = this;
 
             this.connector = new HttpClientConnector(null, '/dummy');
@@ -30,7 +24,7 @@ define([
                         '[]'
                     ]);
 
-            var command = new NamedCommand("test");
+            var command = new NamedCommand("aCommand");
             this.connector.send(command, function(response) {
                 console.log("got test response", response);
                 assert.equals([], response);
@@ -39,7 +33,7 @@ define([
                 assert.equals(200, request.status);
                 assert.equals("POST", request.method);
                 assert.equals(
-                        '[{"id":"test","className":"org.opendolphin.core.comm.NamedCommand"}]',
+                        '[{"id":"aCommand","className":"org.opendolphin.core.comm.NamedCommand"}]',
                         request.requestBody);
 
                 done();
@@ -55,18 +49,20 @@ define([
 
             this.connector._executeSend = function(cmd) {
                 var ajaxDfd = $.Deferred();
+                var _resolve = function(text) {
+                    console.log("resolving "+text);
+                    cmd.onFinished(text+" ok");
+                    cmd.sendDfd.resolve();
+                    ajaxDfd.resolve();
+                };
+
                 if (cmd.data.indexOf("testA") != -1) {
-                    console.log("resolving testA");
+                    // defer resolution of first command
                     setTimeout(function() {
-                        cmd.onFinished("testA ok");
-                        cmd.dfd.resolve();
-                        ajaxDfd.resolve();
+                        _resolve("testA");
                     }, 1000);
                 } else {
-                    console.log("resolving testB");
-                    cmd.onFinished("testB ok");
-                    cmd.dfd.resolve();
-                    ajaxDfd.resolve();
+                    _resolve("testB");
                 }
                 return ajaxDfd.promise();
             };
@@ -83,16 +79,16 @@ define([
             var commandA = new NamedCommand("testA");
             var commandB = new NamedCommand("testB");
 
-            var pA = sendCommand(commandA)
+            sendCommand(commandA)
                 .done(function() {
-                    console.log("DONE A");
+                    console.log("sent commandA");
                     assert.equals(1, receivedResponses.length);
                     assert.equals(commandA, receivedResponses[0]);
                 });
 
-            var pB = sendCommand(commandB)
+            sendCommand(commandB)
                 .done(function() {
-                    console.log("DONE B");
+                    console.log("sent commandB");
                     assert.equals(2, receivedResponses.length);
                     assert.equals(commandB, receivedResponses[1]);
                     done();

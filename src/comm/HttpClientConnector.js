@@ -17,60 +17,66 @@ define([
             return this.serverUrl;
         };
 
-        this.sending = false;
-        this.pendingCommands = [];
+        var sending = false;
+        var pendingCommands = [];
 
-        this._executeSend = function(cmd) {
-            var _data = cmd.data;
-            var _onFinished = cmd.onFinished;
-            var _dfd = cmd.dfd;
+        this._executeSend = function(pendingCmd) {
+            var data = pendingCmd.data;
+            var onFinished = pendingCmd.onFinished;
+            var sendDfd = pendingCmd.sendDfd;
             return $.ajax({
                     type: 'POST',
                     url: this.serverUrl,
-                    data: _data
+                    data: data
                 })
                 .done(function (response) {
                     console.log("got response", response);
-                    if (_onFinished) {
+                    if (onFinished) {
                         // TODO return list of presentation models
-                        _onFinished(response);
+                        onFinished(response);
                     }
-                    _dfd.resolve(response);
+                    sendDfd.resolve(response);
                 })
                 .fail(function (error) {
-                    console.log("send error", cmd, error);
-                    _dfd.reject(error);
+                    console.log("send error", pendingCmd, error);
+                    sendDfd.reject(error);
                 });
         };
 
+        /**
+         * @param command the command to send
+         * @param onFinished the success callback
+         * @returns send result promise (success, error)
+         */
         this.send = function(command, onFinished) {
             var me = this;
 
             var dfd = $.Deferred();
 
-            this.pendingCommands.push({
+            pendingCommands.push({
                 data: this.codec.encode([command]),
                 onFinished: onFinished,
-                dfd: dfd
+                sendDfd: dfd
             });
 
+            console.log("command queued", command);
 
-            function sendNext() {
-                var nextCommand = me.pendingCommands.shift();
-                if (nextCommand) {
-                    console.log("sending ...", nextCommand);
-                    me.sending = true;
-                    me._executeSend(nextCommand)
+            function _sendNext() {
+                var next = pendingCommands.shift();
+                if (next) {
+                    console.log("sending ...", next);
+                    sending = me._executeSend(next)
                         .always(function() {
-                            sendNext();
+                            _sendNext();
                         });
                 } else {
-                    me.sending = false;
+                    console.log("nothing left to send");
+                    sending = undefined;
                 }
             }
 
-            if (!this.sending) {
-                sendNext();
+            if (!sending) {
+                _sendNext();
             }
 
             return dfd.promise();
