@@ -15,6 +15,7 @@ define([
         },
 
         "sends commands correctly": function(done) {
+            var me = this;
             this.server.respondWith(
                     "POST",
                     "/dummy",
@@ -28,6 +29,14 @@ define([
             this.connector.send(command, function(response) {
                 console.log("got test response", response);
                 assert.equals([], response);
+
+                var request = me.server.requests[0];
+                assert.equals(200, request.status);
+                assert.equals("POST", request.method);
+                assert.equals(
+                        '[{"id":"test","className":"org.opendolphin.core.comm.NamedCommand"}]',
+                        request.requestBody);
+
                 done();
             });
         }
