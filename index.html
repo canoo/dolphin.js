@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  </head>
-  <body>
-   dolphin.js
-   <script src="libs/require.js"></script> 
-   <script src="config.js"></script>
-   <script>
-   require(['dolphin'], function(dolphin) {
-    console.log('loaded', dolphin);
-   });
-   </script>
-  </body>
+<head>
+</head>
+<body>
+dolphin.js
+<script src="libs/require.js"></script>
+<script src="config.js"></script>
+<script>
+    require(['dolphin'], function (Dolphin) {
+        var serverUrl = "http://localhost:8888/myFirstDolphin/tutorial/";
+        var dolphin = new Dolphin(serverUrl);
+
+        console.log('init done', dolphin);
+    });
+</script>
+</body>
 </html>

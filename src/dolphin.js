@@ -1,8 +1,19 @@
 define([
-    'comm/test'
-], function (test) {
+    'comm/ClientDolphin',
+    'comm/ClientModelStore',
+    'comm/HttpClientConnector'
+], function (ClientDolphin, ClientModelStore, HttpClientConnector) {
 
-    console.log(test);
+    return function(serverUrl) {
 
+        this.clientDolphin = new ClientDolphin();
+        this.clientDolphin.setClientModelStore(new ClientModelStore(this.clientDolphin));
+
+        var connector = new HttpClientConnector(this.clientDolphin, serverUrl);
+        this.clientDolphin.setClientConnector(connector);
+
+        console.log("dolphin started", serverUrl);
+
+    };
 
 });
