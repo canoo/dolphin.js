@@ -8,10 +8,12 @@ dolphin.js
 <script src="config.js"></script>
 <script>
     require(['Dolphin'], function (Dolphin) {
-        var serverUrl = "http://localhost:8888/myFirstDolphin/tutorial/";
+        var serverUrl = "http://localhost:8080/myFirstDolphin/tutorial/";
         var dolphin = new Dolphin(serverUrl);
 
         console.log('init done', dolphin);
+
+//        dolphin.getClientDolphin().send("step_7.TutorialConstants.LogOnServer")
     });
 </script>
 </body>

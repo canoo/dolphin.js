@@ -5,10 +5,15 @@ config["Browser tests"] = {
     rootPath: "../",
     libs: [
       "libs/require.js",
+      "libs/jquery.js",
       "config.js"
     ],
-    sources: ["src/**/*.js"],
-    tests: ["test/**/*-test.js"],
+    sources: [
+        "src/**/*.js"
+    ],
+    tests: [
+        "test/**/*-test.js"
+    ],
     extensions: [require('buster-amd')],
     "buster-amd": {
         pathMapper: function (path) {

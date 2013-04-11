@@ -6,6 +6,8 @@ define([
 
         this.id = name;
 
+        this.className = "org.opendolphin.core.comm.NamedCommand";
+
     };
 
     NamedCommand.prototype = new Command();

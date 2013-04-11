@@ -1,3 +1,21 @@
 require.config({
-  baseUrl: 'src/'
+
+    baseUrl: 'src/',
+
+    paths: {
+        jquery : '../libs/jquery'
+    },
+
+    shim: {
+        'jquery': {
+            exports: '$'
+        }
+    },
+
+    map : {
+        '*': {
+            $ : 'jquery'
+        }
+    }
+
 });

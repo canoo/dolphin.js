@@ -11,6 +11,7 @@
   "license": "BSD",
   "dependencies": {
     "buster": "~0.6.0",
-    "buster-amd": "~0.3.0"
+    "buster-amd": "~0.3.0",
+    "buster-sinon": "~0.6.0"
   }
 }

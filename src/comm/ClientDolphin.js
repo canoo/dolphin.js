@@ -1,4 +1,6 @@
-define(function () {
+define([
+    'comm/NamedCommand'
+], function (NamedCommand) {
 
     return function() {
 
@@ -16,7 +18,11 @@ define(function () {
 
         this.setClientConnector = function(clientConnector) {
             this.clientConnector = clientConnector;
-        }
+        };
+
+        this.send = function(commandName, onFinished) {
+            this.clientConnector.send(new NamedCommand(commandName), onFinished);
+        };
 
     };
 
