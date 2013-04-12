@@ -38,7 +38,23 @@ define([
             this.registerModel(model);
 
             console.log("model added and registerd");
-        }
+        };
+
+        /**
+         * @param id the attribute id
+         * @returns any matching attribute in any model or undefined
+         */
+        this.findAttributeById = function(id) {
+            var matchingAttribute = undefined;
+            this.models.forEach(function(model) {
+                model.attributes.forEach(function(attr) {
+                    if (attr.id === id) {
+                        matchingAttribute = attr;
+                    }
+                });
+            });
+            return matchingAttribute;
+        };
 
     };
 

@@ -9,6 +9,9 @@
 <div id="label"></div>
 <button id="submitButton">Submit</button>
 
+<button id="addButton">Add</button>
+<div id="list"></div>
+
 <script src="libs/require.js"></script>
 <script src="config.js"></script>
 <script>
@@ -26,7 +29,6 @@
 
 
         var attribute = new ClientAttribute("attrId");
-//        attribute.value = "testValue!";
 
         dolphin.getClientDolphin().presentationModel(
                 "step_7.TutorialConstants.modelId",
@@ -50,6 +52,25 @@
         attribute.on("valueChange", function(data) {
             label.innerHTML = data.newValue;
         });
+
+        attribute.on("valueChange", function(data) {
+            textinput.value = data.newValue;
+        });
+
+
+        var addButton = document.getElementById("addButton");
+        var list = document.getElementById("list");
+        addButton.addEventListener("click", function() {
+            dolphin.getClientDolphin().send("step_7.TutorialConstants.add", function(models) {
+                console.log("NEW models", models);
+                models.forEach(function(model) {
+                    var element = document.createElement("div");
+                    element.innerHTML = model.presentationModelType+": "+model.attributes[0].value;
+                    list.appendChild(element);
+                })
+            });
+        });
+
 
 
     });

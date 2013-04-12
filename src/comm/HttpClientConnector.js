@@ -1,7 +1,8 @@
 define([
     '$',
-    'comm/Codec'
-], function ($, Codec) {
+    'comm/Codec',
+    'comm/ClientAttribute'
+], function ($, Codec, ClientAttribute) {
 
     return function(clientDolphin, serverUrl) {
         this.codec = new Codec();
@@ -20,7 +21,59 @@ define([
         var sending = false;
         var pendingCommands = [];
 
+        /*
+        ValueChanged
+
+         Object {
+         newValue: "Server: test",
+         oldValue: "test",
+         id: "ValueChanged",
+         attributeId: 0,
+         className: "org.opendolphin.core.comm.ValueChangedCommand"}
+         */
+
+        /*
+         {
+         pmId: null,
+         id: "CreatePresentationModel",
+         attributes: Array[1],
+         pmType: "temperature",
+         className: "org.opendolphin.core.comm.CreatePresentationModelCommand"}
+
+         Attribute:
+         propertyName: "degree"
+         qualifier: null
+         tag: "VALUE"
+         value: "9"
+
+         */
+        this._dispatchCommand = function(command) {
+            console.log("dispatching command", command);
+            var modelStore = this.clientDolphin.getClientModelStore();
+
+            switch(command.id) {
+                case 'CreatePresentationModel':
+                    var clientAttributes = command.attributes.map(function(attr) {
+                        var clientAttr = new ClientAttribute(attr.propertyName);
+                        clientAttr.value = attr.value;
+                        return clientAttr;
+                    });
+                    return this.clientDolphin.presentationModel(command.pmId, command.pmType, clientAttributes);
+                case 'InitializeAttribute':
+                    break;
+                case 'ValueChanged':
+                    var attr = modelStore.findAttributeById(command.attributeId);
+                    if (attr) {
+                        attr.setValue(command.newValue);
+                    }
+                    break;
+            }
+            return undefined;
+        };
+
         this._executeSend = function(pendingCmd) {
+            var me = this;
+
             var data = pendingCmd.data;
             var onFinished = pendingCmd.onFinished;
             var sendDfd = pendingCmd.sendDfd;
@@ -31,11 +84,19 @@ define([
                 })
                 .done(function (response) {
                     console.log("got response", response);
+                    var commands = me.codec.decode(response);
+                    var models = [];
+                    commands.forEach(function(cmd) {
+                        var model = me._dispatchCommand(cmd);
+                        console.log("dispatch result", cmd, model);
+                        if (model) {
+                            models.push(model);
+                        }
+                    });
                     if (onFinished) {
-                        // TODO return list of presentation models
-                        onFinished(response);
+                        onFinished(models);
                     }
-                    sendDfd.resolve(response);
+                    sendDfd.resolve(models);
                 })
                 .fail(function (error) {
                     console.log("send error", pendingCmd, error);

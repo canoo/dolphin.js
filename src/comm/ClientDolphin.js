@@ -37,11 +37,19 @@ define([
 
             if (arguments.length > 2) {
                 for (var i = 2; i < arguments.length; i++) {
-                    model.addAttribute(arguments[i]);
+                    var arg = arguments[i];
+                    if (arg instanceof Array) {
+                        arg.forEach(function(elem) {
+                            model.addAttribute(elem);
+                        })
+                    } else {
+                        model.addAttribute(arg);
+                    }
                 }
             }
 
             this.clientModelStore.add(model);
+            return model;
         }
 
     };

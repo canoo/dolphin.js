@@ -7,7 +7,7 @@ define(function () {
         };
 
         this.decode = function(transmitted) {
-
+            return JSON.parse(transmitted);
         };
 
     };

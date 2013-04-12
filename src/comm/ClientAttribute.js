@@ -1,6 +1,6 @@
 define([
-    'comm/Observable'
-], function(Observable) {
+    'comm/EventBus'
+], function(EventBus) {
 
     function ClientAttribute(propertyName) {
 
@@ -27,7 +27,7 @@ define([
         }
     }
 
-    ClientAttribute.prototype = new Observable();
+    ClientAttribute.prototype = new EventBus();
 
     ClientAttribute.nextId = (function() {
         var id = 0;

@@ -1,8 +1,8 @@
 define(function () {
 
-    return function(id, type) {
+    function PresentationModel(id, type) {
 
-        this.id = id;
+        this.id = id || PresentationModel.nextId();
         this.presentationModelType = type;
 
         this.attributes = [];
@@ -11,6 +11,15 @@ define(function () {
             this.attributes.push(attribute);
         }
 
-    };
+    }
+
+    PresentationModel.nextId = (function() {
+        var id = 0;
+        return function() {
+            return id++;
+        }
+    })();
+
+    return PresentationModel;
 
 });
