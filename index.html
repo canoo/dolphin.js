@@ -56,6 +56,7 @@
                 var dolphin = new Dolphin(serverUrl);
 
                 var attribute = new ClientAttribute(attrId);
+                console.log("INIT PM");
                 dolphin.getClientDolphin().presentationModel(
                         pmId,
                         undefined,
@@ -77,6 +78,10 @@
 
                 attribute.on("valueChange", function (data) {
                     label.innerHTML = data.newValue;
+                });
+
+                attribute.on("valueChange", function (data) {
+                    textInput.value = data.newValue;
                 });
 
                 var addButton = document.getElementById("addButton");
