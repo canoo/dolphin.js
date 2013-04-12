@@ -5,7 +5,7 @@ define(function () {
     Utils.hashCode = function(object) {
         var hash = 0;
         var string = "";
-        if (object !== undefined) {
+        if (object !== undefined && typeof object !== "function") {
             string = JSON.stringify(object);
         }
         for (var i = 0; i < string.length; i++) {
