@@ -19,7 +19,7 @@ define([
                 id:             attr.id,
                 qualifier:      attr.qualifier,
                 value:          attr.value,
-                tag:            attr.tag // .name()
+                tag:            attr.tag
             });
         });
 
