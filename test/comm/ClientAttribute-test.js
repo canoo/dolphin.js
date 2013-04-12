@@ -24,6 +24,22 @@ define([
             var id1 = new ClientAttribute().id;
             var id2 = new ClientAttribute().id;
             refute.equals(id1, id2);
+        },
+
+        "two attributes do not share the same event bus": function() {
+            var attrA = new ClientAttribute("A");
+            var attrB = new ClientAttribute("B");
+
+            var countA = 0;
+            var countB = 0;
+            attrA.on("test", function() { countA++; });
+            attrB.on("test", function() { countB++; });
+
+            attrA.trigger("test", {});
+            attrB.trigger("test", {});
+
+            assert.equals(1, countA);
+            assert.equals(1, countB);
         }
 
     })
