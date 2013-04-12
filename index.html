@@ -27,7 +27,7 @@
         <div class="container">
             <h1>Dolphin.js Tutorial</h1>
 
-            <form>
+            <!--<form>-->
                 <fieldset>
                     <legend>Step 1</legend>
                     <span class="help-block">Type something in the input text to test the binding with the label.</span>
@@ -35,7 +35,7 @@
                     <p>Label: <span id="label"></span></p>
                     <button id="logActionButton" class="btn btn-primary">Log Action</button>
                 </fieldset>
-            </form>
+            <!--</form>-->
 
             <button id="addButton">Add</button>
             <div id="list"></div>
@@ -56,6 +56,7 @@
                 var dolphin = new Dolphin(serverUrl);
 
                 var attribute = new ClientAttribute(attrId);
+                console.log("INIT PM");
                 dolphin.getClientDolphin().presentationModel(
                         pmId,
                         undefined,
@@ -77,6 +78,10 @@
 
                 attribute.on("valueChange", function (data) {
                     label.innerHTML = data.newValue;
+                });
+
+                attribute.on("valueChange", function (data) {
+                    textInput.value = data.newValue;
                 });
 
 
