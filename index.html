@@ -4,13 +4,39 @@
         <title>Dolphin.js Tutorial</title>
         <script src="libs/require.js"></script>
         <script src="config.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            }
+        </style>
     </head>
     <body>
-        <h1>Dolphin.js Tutorial</h1>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">Dolphin.js</a>
 
-        <input id="textInput" type="text"/>
-        <div id="label"></div>
-        <button id="logActionButton">Log Action</button>
+                    <ul class="nav">
+                        <li class="active"><a href="#">Step 1</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1>Dolphin.js Tutorial</h1>
+
+            <form>
+                <fieldset>
+                    <legend>Step 1</legend>
+                    <span class="help-block">Type something in the input text to test the binding with the label.</span>
+                    <input id="textInput" type="text" placeholder="Type something..."/>
+                    <p>Label: <span id="label"></span></p>
+                    <button id="logActionButton" class="btn btn-primary">Log Action</button>
+                </fieldset>
+            </form>
+        </div>
 
         <script>
             require([
