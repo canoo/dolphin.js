@@ -31,15 +31,25 @@
                 <legend>Step 1</legend>
                 <span class="help-block">Type something in the input text to test the binding with the label.</span>
                 <input id="textInput" type="text" placeholder="Type something..."/>
+
                 <p>Label: <span id="label"></span></p>
                 <button id="logActionButton" class="btn btn-primary">Log Action</button>
                 <button id="addButton" class="btn btn-primary">Add</button>
                 <div id="list"></div>
             </fieldset>
 
-            <pre id="showCode" class="prettyprint" data-script-id="dolphinCode">
-                <!-- The code snippet will be shown here -->
-            </pre>
+            <hr>
+            <div ng-app="dolphinJsTutorial">
+                <div ng-controller="CollapseController">
+                    <button class="btn" ng-click="isCollapsed = !isCollapsed">{{caption}} Code</button>
+                    <div collapse="isCollapsed">
+                        <pre id="showCode" class="prettyprint" data-script-id="dolphinCode">
+                            <!-- The code snippet will be shown here -->
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <script id="dolphinCode">
@@ -106,5 +116,20 @@
             showCode.innerHTML = script.innerHTML;
         </script>
         <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sunburst"></script>
+
+        <script src="libs/angular-1.0.5.min.js"></script>
+        <script src="libs/ui-bootstrap-tpls-0.2.0.min.js"></script>
+        <script>
+            angular.module('dolphinJsTutorial', ['ui.bootstrap']);
+
+            function CollapseController($scope) {
+                $scope.isCollapsed = true;
+                $scope.caption = "Show";
+
+                $scope.$watch("isCollapsed", function (newValue) {
+                    $scope.caption = newValue ? "Show" : "Hide";
+                });
+            }
+        </script>
     </body>
 </html>
