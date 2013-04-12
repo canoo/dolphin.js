@@ -35,7 +35,30 @@
                 </fieldset>
             <!--</form>-->
 
+            <canvas height="200" width="200" id="gauge"></canvas>
         </div>
+
+        <script src="libs/steelseries-min.js"></script>
+        <script src="libs/tween-min.js"></script>
+        <script>
+            var sections = [
+                steelseries.Section(0, 25, 'rgba(0, 0, 220, 0.3)'),
+                steelseries.Section(25, 50, 'rgba(0, 220, 0, 0.3)'),
+                steelseries.Section(50, 75, 'rgba(220, 220, 0, 0.3)')
+            ];
+
+            var areas = [steelseries.Section(75, 100, 'rgba(220, 0, 0, 0.3)')];
+
+            document.gauge = new steelseries.Radial('gauge', {
+                gaugeType: steelseries.GaugeType.TYPE4,
+                section: sections,
+                area: areas,
+                titleString: "Title",
+                unitString: "Unit",
+                threshold: 50,
+                lcdVisible: true
+            });
+        </script>
 
         <script>
             require([
@@ -73,6 +96,7 @@
 
                 speedAttr.on("valueChange", function (data) {
                     speedLabel.innerHTML = data.newValue;
+                    document.gauge.setValue(Number(data.newValue));
                 });
 
                 colorAttr.on("valueChange", function (data) {
