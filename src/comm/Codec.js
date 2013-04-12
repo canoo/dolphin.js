@@ -7,7 +7,11 @@ define(function () {
         };
 
         this.decode = function(transmitted) {
-            return JSON.parse(transmitted);
+            if (typeof transmitted == 'string') {
+                return JSON.parse(transmitted);
+            } else {
+                return transmitted;
+            }
         };
 
     };

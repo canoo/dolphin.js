@@ -21,32 +21,6 @@ define([
         var sending = false;
         var pendingCommands = [];
 
-        /*
-        ValueChanged
-
-         Object {
-         newValue: "Server: test",
-         oldValue: "test",
-         id: "ValueChanged",
-         attributeId: 0,
-         className: "org.opendolphin.core.comm.ValueChangedCommand"}
-         */
-
-        /*
-         {
-         pmId: null,
-         id: "CreatePresentationModel",
-         attributes: Array[1],
-         pmType: "temperature",
-         className: "org.opendolphin.core.comm.CreatePresentationModelCommand"}
-
-         Attribute:
-         propertyName: "degree"
-         qualifier: null
-         tag: "VALUE"
-         value: "9"
-
-         */
         this._dispatchCommand = function(command) {
             console.log("dispatching command", command);
             var modelStore = this.clientDolphin.getClientModelStore();
@@ -91,7 +65,7 @@ define([
                     data: data
                 })
                 .done(function (response) {
-                    console.log("got response", response);
+                    console.log("received server response", response);
                     var commands = me.codec.decode(response);
                     var models = [];
                     commands.forEach(function(cmd) {

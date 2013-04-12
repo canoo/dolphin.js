@@ -7,7 +7,7 @@ define([
 
     buster.testCase("HttpClientConnector", {
 
-        "//sends commands and calls onFinished correctly": function(done) {
+        "sends commands and calls onFinished correctly": function(done) {
             var me = this;
 
             this.connector = new HttpClientConnector(null, '/dummy');
