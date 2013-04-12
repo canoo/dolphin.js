@@ -18,7 +18,7 @@ define(function () {
             }
             if (subs.indexOf(subscriber) === -1) {
                 subs.push(subscriber);
-                console.log("added subscriber", type, subscriber);
+//                console.log("added subscriber", type, subscriber);
             }
         };
 
@@ -26,7 +26,7 @@ define(function () {
             var subs = this.subscribers[type];
             if (subs) {
                 subs.forEach(function(sub) {
-                    console.log("trigger", type, data, sub);
+//                    console.log("trigger", type, data, sub);
                     sub(data);
                 })
             }
