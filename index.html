@@ -1,59 +1,55 @@
 <!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
+<html lang="en">
+    <head>
+        <title>Dolphin.js Tutorial</title>
+        <script src="libs/require.js"></script>
+        <script src="config.js"></script>
+    </head>
+    <body>
+        <h1>Dolphin.js Tutorial</h1>
 
-<div>dolphin.js</div>
-<input id="textinput" type="text"/>
-<div id="label"></div>
-<button id="submitButton">Submit</button>
+        <input id="textInput" type="text"/>
+        <div id="label"></div>
+        <button id="logActionButton">Log Action</button>
 
-<script src="libs/require.js"></script>
-<script src="config.js"></script>
-<script>
-    require([
-        'Dolphin',
-        'comm/ClientAttribute'
-    ], function (
-            Dolphin,
-            ClientAttribute) {
+        <script>
+            require([
+                'Dolphin',
+                'comm/ClientAttribute'
+            ], function (Dolphin, ClientAttribute) {
 
-        var serverUrl = "http://localhost:8888/myFirstDolphin/tutorial/";
-        var dolphin = new Dolphin(serverUrl);
+                const serverUrl = "http://localhost:8080/myFirstDolphin/tutorial/";
+                const pmId = "step_7.TutorialConstants.modelId";
+                const attrId = "attrId";
+                const actionId = "step_7.TutorialConstants.LogOnServer";
 
-        console.log('init done', dolphin);
+                var dolphin = new Dolphin(serverUrl);
 
+                var attribute = new ClientAttribute(attrId);
+                dolphin.getClientDolphin().presentationModel(
+                        pmId,
+                        undefined,
+                        attribute
+                );
 
-        var attribute = new ClientAttribute("attrId");
-//        attribute.value = "testValue!";
+                var textInput = document.getElementById("textInput");
+                var label = document.getElementById("label");
+                var logActionButton = document.getElementById("logActionButton");
 
-        dolphin.getClientDolphin().presentationModel(
-                "step_7.TutorialConstants.modelId",
-                undefined,
-                attribute
-        );
+                logActionButton.addEventListener("click", function () {
+                    dolphin.getClientDolphin().send(actionId);
+                });
 
-        var textinput = document.getElementById("textinput");
-        var label = document.getElementById("label");
-        var button = document.getElementById("submitButton");
+                textInput.addEventListener("input", function () {
+                    var value = textInput.value;
+                    attribute.setValue(value);
+                });
 
-        button.addEventListener("click", function() {
-            dolphin.getClientDolphin().send("step_7.TutorialConstants.LogOnServer");
-        });
+                attribute.on("valueChange", function (data) {
+                    label.innerHTML = data.newValue;
+                });
 
-        textinput.addEventListener("input", function() {
-            var value = textinput.value;
-            attribute.setValue(value);
-        });
-
-        attribute.on("valueChange", function(data) {
-            label.innerHTML = data.newValue;
-        });
-
-
-    });
-</script>
-
-</body>
+            });
+        </script>
+    </body>
 </html>
