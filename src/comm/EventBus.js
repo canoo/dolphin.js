@@ -1,6 +1,6 @@
 define(function () {
 
-    function Observable() {
+    function EventBus() {
 
         this.subscribers = {};
 
@@ -34,6 +34,6 @@ define(function () {
 
     }
 
-    return Observable;
+    return EventBus;
 
 });
