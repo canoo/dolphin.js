@@ -8,7 +8,7 @@ define(function () {
         if (object !== undefined) {
             string = JSON.stringify(object);
         }
-        for (i = 0; i < string.length; i++) {
+        for (var i = 0; i < string.length; i++) {
             var varchar = string.charCodeAt(i);
             hash = ((hash<<5)-hash)+varchar;
             hash = hash & hash; // Convert to 32bit integer

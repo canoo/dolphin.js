@@ -3,43 +3,57 @@
 <head>
 </head>
 <body>
-dolphin.js
+
+<div>dolphin.js</div>
+<input id="textinput" type="text"/>
+<div id="label"></div>
+<button id="submitButton">Submit</button>
+
 <script src="libs/require.js"></script>
 <script src="config.js"></script>
 <script>
     require([
         'Dolphin',
-        'comm/CreatePresentationModelCommand'
+        'comm/ClientAttribute'
     ], function (
             Dolphin,
-            CreatePresentationModelCommand) {
+            ClientAttribute) {
 
         var serverUrl = "http://localhost:8888/myFirstDolphin/tutorial/";
         var dolphin = new Dolphin(serverUrl);
 
         console.log('init done', dolphin);
 
-//        var connector = dolphin.getClientDolphin().getClientConnector();
-//
-//        var presModel = {
-//            id: "step_7.TutorialConstants.modelId",
-//            presentationModelType: undefined,
-//            attributes: [
-//                {
-//                    propertyName: "attrId",
-//                    id: 123456,
-//                    qualifier: undefined,
-//                    value: "myValue",
-//                    tag: "VALUE"
-//                }
-//            ]
-//        };
-//
-//        var command = new CreatePresentationModelCommand(presModel);
-//        connector.send(command);
-//        dolphin.getClientDolphin().send("step_7.TutorialConstants.LogOnServer");
+
+        var attribute = new ClientAttribute("attrId");
+        attribute.value = "testValue!";
+
+        dolphin.getClientDolphin().presentationModel(
+                "step_7.TutorialConstants.modelId",
+                undefined,
+                attribute
+        );
+
+        var textinput = document.getElementById("textinput");
+        var label = document.getElementById("label");
+        var button = document.getElementById("submitButton");
+
+        button.addEventListener("click", function() {
+            dolphin.getClientDolphin().send("step_7.TutorialConstants.LogOnServer");
+        });
+
+        textinput.addEventListener("input", function() {
+            var value = textinput.value;
+            attribute.setValue(value);
+        });
+
+        attribute.on("valueChange", function(data) {
+            label.innerHTML = data.newValue;
+        });
+
 
     });
 </script>
+
 </body>
 </html>
