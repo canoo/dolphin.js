@@ -1,10 +1,8 @@
 define([
-    '$',
     'comm/ClientDolphin',
     'comm/ClientModelStore',
     'comm/HttpClientConnector'
-], function ($,
-             ClientDolphin, ClientModelStore, HttpClientConnector) {
+], function (ClientDolphin, ClientModelStore, HttpClientConnector) {
 
     return function(serverUrl) {
 

@@ -28,11 +28,10 @@
             <h1>Dolphin.js Tutorial</h1>
 
             <fieldset>
-                <legend>Step 1</legend>
+                <legend>Step 2</legend>
                 <span class="help-block">Type something in the input text to test the binding with the label.</span>
-                <input id="textInput" type="text" placeholder="Type something..."/>
-                <p>Label: <span id="label"></span></p>
-                <button id="logActionButton" class="btn btn-primary">Log Action</button>
+                <input id="tempInput" type="text" placeholder="Temperature..."/>
+                <input id="humidityInput" type="text" placeholder="Humidity..."/>
                 <button id="addButton" class="btn btn-primary">Add</button>
                 <div id="list"></div>
             </fieldset>
@@ -49,39 +48,40 @@
             ], function (Dolphin, ClientAttribute) {
 
                 const serverUrl = "http://localhost:8080/myFirstDolphin/tutorial/";
-                const attrId = "attrId";
                 const actionId = "step_7.TutorialConstants.LogOnServer";
 
                 var dolphin = new Dolphin(serverUrl);
 
-                var attribute = new ClientAttribute(attrId);
+                var tempAttr = new ClientAttribute("tempId");
+                var humAttr = new ClientAttribute("humId");
                 console.log("INIT PM");
                 dolphin.getClientDolphin().presentationModel(
-                        "step_7.TutorialConstants.modelId",
-                        undefined,
-                        attribute
+                        "weatherMold",
+                        "weather",
+                        tempAttr, humAttr
                 );
 
-                var textInput = document.getElementById("textInput");
-                var label = document.getElementById("label");
-                var logActionButton = document.getElementById("logActionButton");
+                var tempInput = document.getElementById("tempInput");
+                var humidityInput = document.getElementById("humidityInput");
 
-                logActionButton.addEventListener("click", function () {
-                    dolphin.getClientDolphin().send(actionId);
+                tempInput.addEventListener("input", function () {
+                    var value = tempInput.value;
+                    tempAttr.setValue(value);
                 });
 
-                textInput.addEventListener("input", function () {
-                    var value = textInput.value;
-                    attribute.setValue(value);
+                tempAttr.on("valueChange", function(data) {
+                    tempInput.value = data.newValue;
                 });
 
-                attribute.on("valueChange", function (data) {
-                    label.innerHTML = data.newValue;
+                humidityInput.addEventListener("input", function () {
+                    var value = humidityInput.value;
+                    humAttr.setValue(value);
                 });
 
-                attribute.on("valueChange", function (data) {
-                    textInput.value = data.newValue;
+                humAttr.on("valueChange", function(data) {
+                    humidityInput.value = data.newValue;
                 });
+
 
                 var addButton = document.getElementById("addButton");
                 var list = document.getElementById("list");
@@ -90,7 +90,28 @@
                         console.log("NEW models", models);
                         models.forEach(function (model) {
                             var element = document.createElement("div");
-                            element.innerHTML = model.presentationModelType + ": " + model.attributes[0].value;
+                            element.id = model.id;
+                            var myTempAttr = model.attributes[0];
+                            var myHumAttr = model.attributes[1];
+                            element.innerHTML = model.presentationModelType + ": " + myTempAttr.value + "/" + myHumAttr.value;
+                            element.addEventListener("click", function() {
+                                var tempValue = myTempAttr.value;
+                                tempAttr.qualifier = myTempAttr.qualifier;
+                                tempAttr.setValue(tempValue);
+
+                                var humValue = myHumAttr.value;
+                                humAttr.qualifier = myHumAttr.qualifier;
+                                humAttr.setValue(humValue);
+                            });
+
+                            myTempAttr.on("valueChange", function(data) {
+                                element.innerHTML = model.presentationModelType + ": " + myTempAttr.value + "/" + myHumAttr.value;
+                            });
+
+                            myHumAttr.on("valueChange", function(data) {
+                                element.innerHTML = model.presentationModelType + ": " + myTempAttr.value + "/" + myHumAttr.value;
+                            });
+
                             list.appendChild(element);
                         })
                     });

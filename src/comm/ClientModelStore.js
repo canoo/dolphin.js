@@ -14,6 +14,8 @@ define([
         };
 
         this.registerModel = function(model) {
+            var me = this;
+
             var connector = this.clientDolphin.getClientConnector();
 
             var createCmd = new CreatePresentationModelCommand(model);
@@ -26,7 +28,16 @@ define([
                     console.log("about to send value changed", cmd);
                     connector.send(cmd);
 
+                    if (attr.qualifier) {
+                        var attrs = me.findAttributesByFilter(function(a) {
+                            return a !== attr && a.qualifier === attr.qualifier;
+                        });
+                        attrs.forEach(function(a) {
+                            a.setValue(attr.getValue());
+                        })
+                    }
                 });
+                attr.stored = true;
             })
         };
 
@@ -41,19 +52,22 @@ define([
         };
 
         /**
-         * @param id the attribute id
-         * @returns any matching attribute in any model or undefined
+         * @param filter the filter function
+         * @returns an array of matches or an empty array otherwise
          */
-        this.findAttributeById = function(id) {
-            var matchingAttribute = undefined;
+        this.findAttributesByFilter = function(filter) {
+            if (typeof filter != 'function') {
+                throw new Error("Argument filter must be a function");
+            }
+            var matches = [];
             this.models.forEach(function(model) {
                 model.attributes.forEach(function(attr) {
-                    if (attr.id === id) {
-                        matchingAttribute = attr;
+                    if (filter(attr)) {
+                        matches.push(attr);
                     }
                 });
             });
-            return matchingAttribute;
+            return matches;
         };
 
     };

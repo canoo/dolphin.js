@@ -56,15 +56,23 @@ define([
                     var clientAttributes = command.attributes.map(function(attr) {
                         var clientAttr = new ClientAttribute(attr.propertyName);
                         clientAttr.value = attr.value;
+                        clientAttr.baseValue = attr.baseValue;
+                        clientAttr.qualifier = attr.qualifier;
                         return clientAttr;
                     });
                     return this.clientDolphin.presentationModel(command.pmId, command.pmType, clientAttributes);
                 case 'InitializeAttribute':
                     break;
                 case 'ValueChanged':
-                    var attr = modelStore.findAttributeById(command.attributeId);
-                    if (attr) {
-                        attr.setValue(command.newValue);
+                    var idMatch = function (attr) {
+                        return (attr.id == command.attributeId)
+                    };
+                    var attrs = modelStore.findAttributesByFilter(idMatch);
+                    if (attrs.length > 1) {
+                        throw new Error("Found multiple attributes with id "+command.attributeId);
+                    }
+                    if (attrs.length == 1) {
+                        attrs[0].setValue(command.newValue);
                     }
                     break;
             }
