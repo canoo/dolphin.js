@@ -25,31 +25,49 @@
         </div>
 
         <div class="container">
-            <h1>Dolphin.js Tutorial</h1>
+            <div class="row hero-unit">
+                <div class="span7">
+                    <h1>Dolphin.js Tutorial</h1>
 
-            <fieldset>
-                <legend>Step 1</legend>
-                <span class="help-block">Type something in the input text to test the binding with the label.</span>
-                <input id="textInput" type="text" placeholder="Type something..."/>
+                    <p class="lead">Because we are cool!</p>
 
-                <p>Label: <span id="label"></span></p>
-                <button id="logActionButton" class="btn btn-primary">Log Action</button>
-                <button id="addButton" class="btn btn-primary">Add</button>
-                <div id="list"></div>
-            </fieldset>
+                    <p class="btn btn-primary">...and use Bootstrap!</p>
+                </div>
+                <a href="http://open-dolphin.org">
+                    <img class="span3 pull-right" src="img/open_dolphin_logo.png" alt="Open Dolphin">
+                </a>
+            </div>
 
-            <hr>
+            <div class="row">
+                <fieldset>
+                    <legend>Step 1 - Some simple binding</legend>
+                    <span class="help-block">Type something in the input text to test the binding with the label.</span>
+                    <input id="textInput" type="text" placeholder="Type something..."/>
+
+                    <p>Label: <span id="label"></span></p>
+                    <button id="logActionButton" class="btn btn-primary">Log Action</button>
+                    <button id="addButton" class="btn btn-primary">Add</button>
+                    <div id="list"></div>
+                </fieldset>
+
+                <hr>
+            </div>
+
             <div ng-app="dolphinJsTutorial">
                 <div ng-controller="CollapseController">
-                    <button class="btn" ng-click="isCollapsed = !isCollapsed">{{caption}} Code</button>
-                    <div collapse="isCollapsed">
+                    <div class="row">
+                        <button class="btn pull-left" ng-click="isCollapsed = !isCollapsed">{{caption}} Code</button>
+                        <a href="http://www.canoo.com">
+                            <img class="pull-right" src="img/canoo_logo.png" alt="Canoo Engineering AG">
+                        </a>
+                    </div>
+                    <div class="row" collapse="isCollapsed">
                         <pre id="showCode" class="prettyprint" data-script-id="dolphinCode">
                             <!-- The code snippet will be shown here -->
                         </pre>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <script id="dolphinCode">
