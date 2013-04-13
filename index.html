@@ -18,9 +18,9 @@
                 <div class="container">
                     <a class="brand" href="#">Dolphin.js</a>
 
-                        <ul class="nav">
-                            <li class="active"><a href="#">Step 1</a></li>
-                        </ul>
+                    <ul class="nav">
+                        <li class="active"><a href="#">Step 1</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -54,6 +54,7 @@
                 <hr>
             </div>
 
+            <!-- Collapsible area to show the code snippet -->
             <div ng-app="dolphinJsTutorial">
                 <div ng-controller="CollapseController">
                     <div class="row">
@@ -128,6 +129,7 @@
             });
         </script>
 
+        <!-- Copy the content of the application script into an html container and Use prettify to show the code snippet -->
         <script>
             var showCode = document.getElementById("showCode");
             var scriptId = showCode.getAttribute("data-script-id");
@@ -136,6 +138,7 @@
         </script>
         <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sunburst"></script>
 
+        <!-- Use AngularJS directives for Bootstrap to make the code snippet collapsible -->
         <script src="libs/angular-1.0.5.min.js"></script>
         <script src="libs/ui-bootstrap-tpls-0.2.0.min.js"></script>
         <script>
