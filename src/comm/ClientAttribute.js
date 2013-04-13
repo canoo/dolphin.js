@@ -24,6 +24,14 @@ define([
 
         this.getValue = function() {
             return this.value;
+        };
+
+        this.syncWith = function(sourceAttribute) {
+            if (sourceAttribute) {
+                this.baseValue = sourceAttribute.baseValue;
+                this.qualifier = sourceAttribute.qualifier;
+                this.setValue(sourceAttribute.getValue());
+            }
         }
     }
 

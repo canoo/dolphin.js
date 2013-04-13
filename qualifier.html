@@ -52,10 +52,10 @@
 
                 var dolphin = new Dolphin(serverUrl);
 
-                var tempAttr = new ClientAttribute("tempId");
-                var humAttr = new ClientAttribute("humId");
+                var tempAttr = new ClientAttribute("temperature");
+                var humAttr = new ClientAttribute("humidity");
                 console.log("INIT PM");
-                dolphin.getClientDolphin().presentationModel(
+                var weatherMold = dolphin.getClientDolphin().presentationModel(
                         "weatherMold",
                         "weather",
                         tempAttr, humAttr
@@ -90,27 +90,21 @@
                         console.log("NEW models", models);
                         models.forEach(function (model) {
                             var element = document.createElement("div");
-                            element.id = model.id;
-                            var myTempAttr = model.attributes[0];
-                            var myHumAttr = model.attributes[1];
-                            element.innerHTML = model.presentationModelType + ": " + myTempAttr.value + "/" + myHumAttr.value;
+                            var myTempAttr = model.getAttributeByPropertyName("temperature");
+                            var myHumAttr = model.getAttributeByPropertyName("humidity");
+
+                            var render = function() {
+                                element.innerHTML = model.presentationModelType + ": " + myTempAttr.value + "/" + myHumAttr.value;
+                            };
+
+                            render();
+
                             element.addEventListener("click", function() {
-                                var tempValue = myTempAttr.value;
-                                tempAttr.qualifier = myTempAttr.qualifier;
-                                tempAttr.setValue(tempValue);
-
-                                var humValue = myHumAttr.value;
-                                humAttr.qualifier = myHumAttr.qualifier;
-                                humAttr.setValue(humValue);
+                                weatherMold.syncWith(model);
                             });
 
-                            myTempAttr.on("valueChange", function(data) {
-                                element.innerHTML = model.presentationModelType + ": " + myTempAttr.value + "/" + myHumAttr.value;
-                            });
-
-                            myHumAttr.on("valueChange", function(data) {
-                                element.innerHTML = model.presentationModelType + ": " + myTempAttr.value + "/" + myHumAttr.value;
-                            });
+                            myTempAttr.on("valueChange", render);
+                            myHumAttr.on("valueChange", render);
 
                             list.appendChild(element);
                         })
