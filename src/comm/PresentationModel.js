@@ -1,4 +1,6 @@
-define(function () {
+define([
+    'comm/EventBus'
+],function (EventBus) {
 
     function PresentationModel(id, type) {
 
@@ -8,7 +10,11 @@ define(function () {
         this.attributes = [];
 
         this.addAttribute = function(attribute) {
+            var me = this;
             this.attributes.push(attribute);
+            attribute.on("valueChange", function(data) {
+                me.trigger("render", {});
+            });
         };
 
         this.getAttributeByPropertyName = function(propertyName) {
@@ -31,6 +37,8 @@ define(function () {
         };
 
     }
+
+    PresentationModel.prototype = new EventBus();
 
     PresentationModel.nextId = (function() {
         var id = 0;

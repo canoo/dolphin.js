@@ -87,24 +87,20 @@
                 var list = document.getElementById("list");
                 addButton.addEventListener("click", function () {
                     dolphin.getClientDolphin().send("step_7.TutorialConstants.add", function (models) {
-                        console.log("NEW models", models);
                         models.forEach(function (model) {
                             var element = document.createElement("div");
-                            var myTempAttr = model.getAttributeByPropertyName("temperature");
-                            var myHumAttr = model.getAttributeByPropertyName("humidity");
 
                             var render = function() {
+                                var myTempAttr = model.getAttributeByPropertyName("temperature");
+                                var myHumAttr = model.getAttributeByPropertyName("humidity");
                                 element.innerHTML = model.presentationModelType + ": " + myTempAttr.value + "/" + myHumAttr.value;
                             };
-
                             render();
+                            model.on("render", render);
 
                             element.addEventListener("click", function() {
                                 weatherMold.syncWith(model);
                             });
-
-                            myTempAttr.on("valueChange", render);
-                            myHumAttr.on("valueChange", render);
 
                             list.appendChild(element);
                         })
