@@ -1,17 +1,27 @@
 {
-  "name": "hybrid-tests",
-  "version": "0.0.0",
-  "description": "Node test demo",
-  "main": "buster.js",
-  "scripts": {
-    "test": "./node_modules/buster/bin/buster-test --environment browser"
-  },
-  "repository": "",
-  "author": "",
-  "license": "BSD",
-  "dependencies": {
-    "buster": "~0.6.0",
-    "buster-amd": "~0.3.0",
-    "buster-sinon": "~0.6.0"
-  }
+
+    "name"           : "dolphin.js",
+    "description"    : "open-dolphin.org JavaScript client",
+    "bundle"         : "dolphin",
+    "version"        : "0.0.1",
+    "devDependencies": {
+        "grunt"                   : ">=0.4.0",
+        "grunt-contrib"           : ">=0.4.0",
+        "grunt-contrib-requirejs" : ">=0.2.0",
+        "grunt-contrib-jshint"    : ">=0.1.0",
+        "grunt-contrib-clean"     : "~0.4.0",
+        "buster"                  : ">=0.6.12",
+        "buster-amd"              : ">=0.2.0",
+        "grunt-buster"            : "~0.1.2"
+    },
+    "dependencies": {
+        "buster": "~0.6.12",
+        "buster-amd": "~0.2.0",
+        "buster-sinon": "~0.6.0"
+    },
+    "engines"        : {
+        "node": "0.8.x",
+        "npm" : "1.1.x"
+    }
+
 }
