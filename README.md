@@ -1,1 +1,3 @@
-Prototype of a JavaScript OpenDolphin client
+JavaScript OpenDolphin client
+
+current implementation status: proof of concept
