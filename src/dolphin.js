@@ -16,8 +16,7 @@ define([
             return this.clientDolphin;
         };
 
-        console.log("dolphin started", serverUrl);
-
+        console.log("dolphin connected", serverUrl);
     };
 
 });
