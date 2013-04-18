@@ -1,7 +1,12 @@
 define([
+    'comm/Attribute',
+    'comm/ChangeAttributeMetadataCommand',
     'comm/CreatePresentationModelCommand',
     'comm/ValueChangedCommand'
-], function(CreatePresentationModelCommand, ValueChangedCommand) {
+], function(Attribute,
+            ChangeAttributeMetadataCommand,
+            CreatePresentationModelCommand,
+            ValueChangedCommand) {
 
     return function(clientDolphin) {
 
@@ -36,6 +41,10 @@ define([
                             a.setValue(attr.getValue());
                         })
                     }
+                });
+                attr.on("qualifierChange", function(data) {
+                    var cmd = new ChangeAttributeMetadataCommand(attr.id, Attribute.QUALIFIER_PROPERTY, data.newQualifier);
+                    connector.send(cmd)
                 });
                 attr.stored = true;
             })
