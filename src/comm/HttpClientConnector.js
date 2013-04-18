@@ -1,10 +1,11 @@
 define([
     '$',
     'comm/Codec',
-    'comm/ClientAttribute'
-], function ($, Codec, ClientAttribute) {
+    'comm/ClientAttribute',
+    'comm/EventBus'
+], function ($, Codec, ClientAttribute, EventBus) {
 
-    return function(clientDolphin, serverUrl) {
+    function HttpClientConnector(clientDolphin, serverUrl) {
         this.codec = new Codec();
 
         this.clientDolphin = clientDolphin;
@@ -62,9 +63,14 @@ define([
             return $.ajax({
                     type: 'POST',
                     url: this.serverUrl,
-                    data: data
+                    data: data,
+                    beforeSend: function() {
+                     me.trigger("sent", data)
+                    }
                 })
                 .done(function (response) {
+                    me.trigger("received", response);
+
                     console.log("received server response", response);
                     var commands = me.codec.decode(response);
                     var models = [];
@@ -81,6 +87,8 @@ define([
                     sendDfd.resolve(models);
                 })
                 .fail(function (error) {
+                    me.trigger("error", error);
+
                     console.log("send error", pendingCmd, error);
                     sendDfd.reject(error);
                 });
@@ -125,6 +133,9 @@ define([
             return dfd.promise();
         }
 
-    };
+    }
 
+    HttpClientConnector.prototype = new EventBus();
+
+    return HttpClientConnector;
 });

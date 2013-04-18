@@ -75,11 +75,22 @@
                 'comm/ClientAttribute'
             ], function (Dolphin, ClientAttribute) {
 
-                const serverUrl = "http://localhost:8080/myFirstDolphin/tutorial/";
+                const serverUrl = "http://dolphinjs-tutorial-server.herokuapp.com";
                 const attrId = "attrId";
                 const actionId = "step_7.TutorialConstants.LogOnServer";
 
                 var dolphin = new Dolphin(serverUrl);
+
+                var clientConnector = dolphin.getClientDolphin().getClientConnector();
+                clientConnector.on("sent", function(data) {
+                    console.log("Sent: ", data);
+                });
+                clientConnector.on("received", function(data) {
+                    console.log("Received: ", data);
+                });
+                clientConnector.on("error", function(data) {
+                    console.log("Error: ", data);
+                });
 
                 var attribute = new ClientAttribute(attrId);
                 console.log("INIT PM");
