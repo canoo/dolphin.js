@@ -11,7 +11,7 @@ module.exports = function (grunt) {
                         name          : 'Dolphin',
                         baseUrl       : "src/",
                         mainConfigFile: "config.js",
-                        optimize      : "uglify",
+//                        optimize      : "uglify",
                         out           : "build/<%= pkg.bundle %>.min.js"
                     }
                 }
@@ -44,7 +44,7 @@ module.exports = function (grunt) {
                 },
                 globals: {
                     exports: true,
-                    $      : true,
+                    $      : true
                 }
             },
 
