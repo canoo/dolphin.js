@@ -1,7 +1,8 @@
 define([
     'comm/NamedCommand',
+    'comm/EmptyNotification',
     'comm/PresentationModel'
-], function (NamedCommand, PresentationModel) {
+], function (NamedCommand, EmptyNotification, PresentationModel) {
 
     return function() {
 
@@ -23,6 +24,10 @@ define([
 
         this.send = function(commandName, onFinished) {
             this.clientConnector.send(new NamedCommand(commandName), onFinished);
+        };
+
+        this.sendEmpty = function(onFinished) {
+            this.clientConnector.send(new EmptyNotification(), onFinished);
         };
 
         /**
