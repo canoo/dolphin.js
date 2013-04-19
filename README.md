@@ -11,8 +11,8 @@ a jump start demo is available on github: [DolphinJSJumpStart](https://github.co
 More Information
 ----------------
 
-* [open-dolphin.org](http://open-dolphin.org))
-* @OpenDolphin
+* [open-dolphin.org](http://open-dolphin.org)
+* [@OpenDolphin](http://twitter.com/opendolphin)
 * #dolphin.js
 
 Status
