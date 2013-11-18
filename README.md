@@ -19,3 +19,11 @@ Status
 ------
 
 current implementation status: *pre-alpha*
+
+Building
+--------
+
+* install node.js
+* in the root dir
+     npm install
+     npm install -g grunt
