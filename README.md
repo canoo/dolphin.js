@@ -19,3 +19,13 @@ Status
 ------
 
 current implementation status: *pre-alpha*
+
+Building
+--------
+
+* install node.js
+* install grunt (with command line interface)
+     npm install -g grunt
+     npm install -g grunt-cli
+* in the root dir
+     npm install
