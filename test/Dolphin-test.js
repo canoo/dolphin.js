@@ -9,7 +9,8 @@ define([
         "is initialized with connector and model store": function () {
 
             var serverUrl = "http://localhost:8888/myFirstDolphin/tutorial/";
-            var dolphin = new Dolphin(serverUrl);
+
+            var dolphin = new Dolphin({ serverUrl: serverUrl });
             var clientDolphin = dolphin.getClientDolphin();
 
             var clientConnector = clientDolphin.getClientConnector();
