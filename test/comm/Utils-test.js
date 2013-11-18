@@ -3,6 +3,7 @@ define([
 ], function(Utils) {
 
     var assert = buster.assert;
+    var refute= buster.refute;
 
     buster.testCase("Utils", {
 
